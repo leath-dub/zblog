@@ -28,4 +28,5 @@ jobs:
         platforms: ${{ matrix.platforms }}
         push: true
         outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=zblog image
-
+        secrets: |
+            "github_token=${{ secrets.GITHUB_TOKEN }}" 
