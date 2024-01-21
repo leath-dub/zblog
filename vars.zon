@@ -18,10 +18,4 @@
 		.path = "blogs",
 		.hash_path = true,
 	},
-
-	.styles = .{
-		.type = .css,
-		.path = "styles.css",
-		.hash_path = false,
-	},
 }
