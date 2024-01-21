@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) !void {
     const zap = b.dependency("zap", .{
         .target = target,
         .optimize = optimize,
-        .openssl = true,
+        .openssl = false,
     });
     exe.addModule("zap", zap.module("zap"));
     exe.linkLibrary(zap.artifact("facil.io"));
