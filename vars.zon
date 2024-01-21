@@ -1,0 +1,27 @@
+.{
+	.title = "Blog",
+
+	.@"test-markdown" = .{
+		.type = .markdown,
+		.path = "test.md",
+		.hash_path = true,
+	},
+
+	.@"index.html" = .{
+		.type = .html,
+		.path = "index.html",
+		.hash_path = false,
+	},
+
+	.blogs = .{
+		.type = .markdown,
+		.path = "blogs",
+		.hash_path = true,
+	},
+
+	.styles = .{
+		.type = .css,
+		.path = "styles.css",
+		.hash_path = false,
+	},
+}
