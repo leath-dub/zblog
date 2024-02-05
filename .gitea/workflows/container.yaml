@@ -38,6 +38,6 @@ jobs:
 
       - name: Build and push the image
         run: |
-          podman build --ulimit=nofile=131072:1048576 . -t ${{ gitea.repository }}
+          podman build . -t ${{ gitea.repository }}
           podman push git.cathal.xyz/${{ gitea.repository }}:${{ gitea.sha }}
           podman push git.cathal.xyz/${{ gitea.repository }}:latest
