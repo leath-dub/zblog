@@ -6,14 +6,24 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Cache podman
+        id: cache-podman
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/bin/podman
+          key: ${{ runner.os }}-podman
+
       - name: Install podman
+        if: steps.cache-podman.outputs.cache-hit != 'true'
         run: |
           wget https://github.com/containers/podman/releases/download/v4.9.2/podman-remote-static-linux_amd64.tar.gz
           tar xf podman-remote-static-linux_amd64.tar.gz
           mv bin/podman-remote-static-linux_amd64 /usr/local/bin/podman
+
+      - name: Setup connection to host podman socket
+        run: |
           podman system connection add host unix:///var/run/docker.sock
           podman system connection list
-          mkdir /root/.docker
 
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -28,6 +38,6 @@ jobs:
 
       - name: Build and push the image
         run: |
-          podman build --ulimit=host . -t ${{ gitea.repository }}
+          podman build --ulimit=nofile=131072:1048576 . -t ${{ gitea.repository }}
           podman push git.cathal.xyz/${{ gitea.repository }}:${{ gitea.sha }}
           podman push git.cathal.xyz/${{ gitea.repository }}:latest
