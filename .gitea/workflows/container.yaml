@@ -2,6 +2,9 @@ name: Gitea Actions Demo
 run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
 on: [push]
 
+env:
+  REGISTRY_AUTH_FILE: /run/containers/0/auth.json
+
 jobs:
   publish:
     runs-on: ubuntu-latest
