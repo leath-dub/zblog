@@ -9,9 +9,9 @@ jobs:
       - name: Install podman
         run: |
           wget https://github.com/containers/podman/releases/download/v4.9.2/podman-remote-static-linux_amd64.tar.gz
-          tar xvf podman-remote-static-linux_amd64.tar.gz
+          tar xf podman-remote-static-linux_amd64.tar.gz
           mv bin/podman-remote-static-linux_amd64 /usr/local/bin/podman
-          podman system connection add host unix:///run/user/1000/podman/podman.sock
+          podman system connection add host unix:///var/run/docker.sock
           podman system connection list
 
       - name: Check out repository code
