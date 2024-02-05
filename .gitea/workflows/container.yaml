@@ -26,11 +26,7 @@ jobs:
           podman version
           podman login git.cathal.xyz -u ${{ gitea.repository_owner }} -p ${{ secrets.GITEA_TOKEN }}
 
-      - name: Build Image
-        uses: redhat-actions/buildah-build@v2
-        with:
-          image: ${{ gitea.repository }}
-          tags: ${{ gitea.sha }} latest
-          auth_file_path: /tmp/podman-run-0/containers/auth.json
-          containerfiles: |
-            ./Dockerfile
+      - name: Build and push the image
+        run: |
+          podman push git.cathal.xyz/${{ gitea.repository }}:${{ gitea.sha }}
+          podman push git.cathal.xyz/${{ gitea.repository }}:latest
