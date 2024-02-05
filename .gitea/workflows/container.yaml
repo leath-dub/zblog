@@ -51,7 +51,6 @@ jobs:
 
       - name: Build zblog
         run: |
-          zig build
           zig build -Doptimize=ReleaseFast -Dtarget=x86_64-linux
 
       - name: Build and push the image
