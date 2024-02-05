@@ -23,7 +23,7 @@ jobs:
       - name: Login to Container registry
         uses: redhat-actions/podman-login@v1
         with:
-          registry: gitea.cathal.xyz
+          registry: git.cathal.xyz
           username: ${{ gitea.repository_owner }}
           password: ${{ secrets.GITEA_TOKEN }}
 
