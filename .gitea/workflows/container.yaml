@@ -13,7 +13,8 @@ jobs:
           mv bin/podman-remote-static-linux_amd64 /usr/local/bin/podman
           podman system connection add host unix:///var/run/docker.sock
           podman system connection list
-          mkdir /root/.docker/config.json
+          mkdir /root/.docker
+          touch /root/.docker/config.json
 
       - name: Check out repository code
         uses: actions/checkout@v4
