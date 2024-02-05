@@ -28,5 +28,6 @@ jobs:
 
       - name: Build and push the image
         run: |
+          podman build . -t ${{ gitea.repository }}
           podman push git.cathal.xyz/${{ gitea.repository }}:${{ gitea.sha }}
           podman push git.cathal.xyz/${{ gitea.repository }}:latest
