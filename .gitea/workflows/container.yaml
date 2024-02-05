@@ -50,11 +50,11 @@ jobs:
 
       - name: Build zblog
         run: |
+          find .
           zig build -Doptimize=ReleaseFast -Dtarget=x86_64-linux
 
       - name: Build and push the image
         run: |
-          find .
           podman build . -t ${{ gitea.repository }}
           podman push git.cathal.xyz/${{ gitea.repository }}:${{ gitea.sha }}
           podman push git.cathal.xyz/${{ gitea.repository }}:latest
