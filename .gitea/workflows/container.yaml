@@ -13,6 +13,13 @@ jobs:
           path: /usr/local/bin/podman
           key: ${{ runner.os }}-podman
 
+      - name: Cache zig binary
+        id: cache-zig
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/bin/zig
+          key: ${{ runner.os }}-zig
+
       - name: Install podman
         if: steps.cache-podman.outputs.cache-hit != 'true'
         run: |
@@ -28,13 +35,22 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Login to Container registry
         run: |
           podman version
           podman login git.cathal.xyz -u ${{ gitea.repository_owner }} -p ${{ secrets.GITEA_TOKEN }}
+
+      - name: Install zig
+        if: steps.cache-zig.outputs.cache-hit != 'true'
+        run: |
+          wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
+          tar xf zig-linux-x86_64-0.11.0.tar.xz
+          mv zig-linux-x86_64-0.11.0 /usr/local/bin
+          ln -s /usr/local/bin/zig-linux-x86_64-0.11.0/zig /usr/local/bin/zig
+
+      - name: Build zblog
+        run: |
+          zig build -Doptimize=ReleaseFast -Dtarget=x86_64-linux
 
       - name: Build and push the image
         run: |
