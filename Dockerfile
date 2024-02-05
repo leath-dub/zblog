@@ -1,9 +1,8 @@
-FROM docker.io/alpine:latest
+FROM docker.io/alpine:edge
 WORKDIR /root
 COPY . /root
-RUN apk add curl
-RUN curl -LO https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
-RUN tar xf ./zig-linux-x86_64-0.11.0.tar.xz
-RUN rm ./zig-linux-x86_64-0.11.0.tar.xz
-RUN ./zig-linux-x86_64-0.11.0/zig build -Doptimize=ReleaseFast -Dtarget=x86_64-linux
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apk add curl zig
+RUN zig build -Doptimize=ReleaseFast -Dtarget=x86_64-linux
+RUN rm ./zig-cache
 CMD ./zig-out/bin/zblog
