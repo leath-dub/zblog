@@ -22,11 +22,9 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Login to Container registry
-        uses: redhat-actions/podman-login@v1
-        with:
-          registry: git.cathal.xyz
-          username: ${{ gitea.repository_owner }}
-          password: ${{ secrets.GITEA_TOKEN }}
+        run: |
+          podman version
+          podman login git.cathal.xyz -u ${{ gitea.repository_owner }} -p ${{ secrets.GITEA_TOKEN }}
 
       - name: Build Image
         uses: redhat-actions/buildah-build@v2
