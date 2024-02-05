@@ -33,6 +33,6 @@ jobs:
         with:
           image: ${{ gitea.repository }}
           tags: ${{ gitea.sha }} latest
-          auth_file_path: ./auth/auth.json
+          auth_file_path: /tmp/podman-run-0/containers/auth.json
           containerfiles: |
             ./Dockerfile
