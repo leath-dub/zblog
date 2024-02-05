@@ -6,6 +6,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: gacts/install-podman@v1
       - name: Check out repository code
         uses: actions/checkout@v4
 
@@ -19,9 +20,10 @@ jobs:
           username: ${{ gitea.repository_owner }}
           password: ${{ secrets.GITEA_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v4
+      - name: Build Image
+        uses: redhat-actions/buildah-build@v2
         with:
-          context: "."
-          push: true
-          tags: "${{ gitea.repository }}:${{ gitea.sha }},${{ gitea.repository }}:latest"
+          image: ${{ gitea.repository }}
+          tags: ${{ gitea.sha }} latest
+          containerfiles: |
+            ./Dockerfile
