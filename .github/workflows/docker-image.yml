@@ -29,6 +29,19 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Install zig
+      if: steps.cache-zig.outputs.cache-hit != 'true'
+      run: |
+        wget https://ziglang.org/download/0.11.0/zig-linux-x86_64-0.11.0.tar.xz
+        tar xf zig-linux-x86_64-0.11.0.tar.xz
+        rm ./zig-linux-x86_64-0.11.0.tar.xz
+        mv zig-linux-x86_64-0.11.0 /usr/local/bin
+        ln -s /usr/local/bin/zig-linux-x86_64-0.11.0/zig /usr/local/bin/zig
+
+    - name: Build zblog
+      run: |
+        zig build -Doptimize=ReleaseFast -Dtarget=x86_64-linux
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
