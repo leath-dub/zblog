@@ -1,11 +1,6 @@
 .{
 	.title = "Blog",
-
-	.@"test-markdown" = .{
-		.type = .markdown,
-		.path = "test.md",
-		.hash_path = true,
-	},
+	.git = "https://github.com/leath-dub/zblog",
 
 	.@"index.html" = .{
 		.type = .html,
@@ -16,6 +11,6 @@
 	.blogs = .{
 		.type = .markdown,
 		.path = "blogs",
-		.hash_path = true,
+		.hash_path = false,
 	},
 }
